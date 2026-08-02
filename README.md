@@ -155,6 +155,27 @@ Wir haben dieses System anhand eines Vergleichs zwischen einem **gut kalibrierte
 > * **Panel 1:** Score distributions and automatically calibrated $\hat{q}$ thresholds ($\hat{q}_{\text{good}} = 0.848$, $\hat{q}_{\text{weak}} = 1.000$).
 > * **Panel 2:** Empirical coverage verification proving mathematical guarantees on test data ($\ge 90\%$).
 > * **Panel 3:** Set size distribution illustrating the efficiency gap between confident ($2.15$ classes) and uncertain ($9.89$ classes) models.
+
+## 🧪 Theoretical Proofs & Empirical Comparisons / Teorik Kanıtlar ve Ampirik Karşılaştırmalar
+
+![Conformal Prediction Theoretical Proofs](assets/proof_of_concepts.png)
+
+<details>
+<summary><b>🇺🇸 English: Theoretical Proofs & Experimental Demonstration</b></summary>
+
+This repository includes a standalone simulation script (`src/proof_of_concepts.py`) demonstrating the key theoretical properties of Conformal Prediction in continuous/regression domains:
+
+### 1. Dynamic Band Adaptivity (Scalar Uncertainty vs. Fixed Bands)
+* **Classical Fixed-Width Bands (Red Dotted Line):** Standard confidence intervals apply a uniform margin across all inputs. On heteroskedastic data (where noise increases with input magnitude $X$), fixed bands are unnecessarily wide for easy inputs and fail to cover hard inputs.
+* **Conformalized Scalar Uncertainty (Blue Shaded Area):** By scaling the non-conformity score with model uncertainty $u(x)$, the resulting prediction interval $\mathcal{C}(x) = [\hat{f}(x) - u(x)\hat{q}, \hat{f}(x) + u(x)\hat{q}]$ dynamically expands in noisy regions, guaranteeing valid coverage while remaining tight on easy inputs.
+
+### 2. Marginal vs. Conditional Coverage (Fairness & FSC Metric)
+* **Marginal Coverage Fallacy (Crimson Bars):** A model can achieve a global 90% coverage on average while completely failing on a minority/hard sub-group (e.g., 99% coverage on Group A, 40% coverage on Group B).
+* **Conditional Coverage & FSC Metric (Green Bars):** Adaptively scaling the conformal set per group ensures equitable error distribution across all input strata, maintaining $\ge 90\%$ coverage across all sub-groups.
+
+#### How to run and reproduce figures:
+```bash
+python src/proof_of_concepts.py
 ---
 
 ## 🚀 Quick Start / Hızlı Başlangıç / Schnellstart
