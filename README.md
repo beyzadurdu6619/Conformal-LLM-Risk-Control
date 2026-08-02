@@ -172,7 +172,47 @@ This repository includes a standalone simulation script (`src/proof_of_concepts.
 ### 2. Marginal vs. Conditional Coverage (Fairness & FSC Metric)
 * **Marginal Coverage Fallacy (Crimson Bars):** A model can achieve a global 90% coverage on average while completely failing on a minority/hard sub-group (e.g., 99% coverage on Group A, 40% coverage on Group B).
 * **Conditional Coverage & FSC Metric (Green Bars):** Adaptively scaling the conformal set per group ensures equitable error distribution across all input strata, maintaining $\ge 90\%$ coverage across all sub-groups.
+---
 
+## 📐 Diagnostics, Adaptivity & Coverage Validation / Teşhis, Adaptivite ve Kapsama Doğrulaması
+
+This section provides empirical validation for the diagnostic mechanisms described in **Section 3** of the paper, including Beta-distribution fluctuations, score caching, and Size-Stratified Coverage (SSC).
+
+### 1. Calibration Set Size ($n$) & Coverage Stability
+
+![Coverage Diagnostics](assets/section3_coverage_diagnostics.png)
+
+<details>
+<summary><b>🇺🇸 English: Diagnostics Analysis & Interpretation</b></summary>
+
+* **Beta Distribution ($n$ Effect - Left Chart):** According to Vladimir Vovk's exact theory, the coverage conditional on a fixed calibration set follows $\text{Beta}(n+1-l, l)$. As $n$ grows from $100$ to $10,000$, variance rapidly shrinks. $n \approx 1000$ represents the optimal trade-off, bounding coverage reliably between $88\%$ and $92\%$.
+* **Score Caching & R-Trials (Right Chart):** Running $R=500$ trials with cached scores verifies that empirical coverage is unbiased and centered strictly at $1 - \alpha = 0.90$. Minor deviations are benign finite-sample fluctuations.
+
+</details>
+
+<details>
+<summary><b>🇹🇷 Türkçe: Teşhis Analizleri ve Yorumlama</b></summary>
+
+* **Beta Dağılımı ($n$ Etkisi - Sol Grafik):** Sabit bir kalibrasyon setine koşullu kapsama $\text{Beta}(n+1-l, l)$ dağılımı izler. $n$ değeri $100$'den $10.000$'e çıktıkça varyans hızla daralır. Pratik uygulamalar için $n \approx 1000$ noktası, kapsamayı $\%88$ ile $\%92$ arasında sabitleyen ideal eşiktir.
+* **Skor Önbellekleme ve R-Deneme (Sağ Grafik):** Önceden hesaplanmış skorlar üzerinde yapılan $R=500$ rastgele bölme denemesi, ampirik kapsamanın sapmasız (unbiased) olduğunu ve tam $1 - \alpha = 0.90$ etrafında kümelendiğini kanıtlar.
+
+</details>
+
+---
+
+### 2. Adaptivity Spread & Size-Stratified Coverage (SSC)
+
+![Adaptivity and SSC](assets/section3_adaptivity_ssc.png)
+
+<details>
+<summary><b>🇺🇸 English: Adaptivity & SSC Metric Comparison</b></summary>
+
+* **Set Size Histogram Spread (Left Chart):** A rigid/non-adaptive model yields narrow set sizes (e.g., constant 2-3 elements), failing to distinguish easy from hard inputs. An adaptive conformal model produces a wider dynamic spread (1 element for easy inputs, 4+ for uncertain ones).
+* **Size-Stratified Coverage (SSC Metric - Right Chart):** Measures conditional coverage across set cardinality bins $\min_{g} \text{Coverage}(B_g)$. The adaptive model maintains equitable $\ge 90\%$ coverage across all set sizes, whereas non-adaptive baselines collapse on complex inputs.
+
+#### Run diagnostics code:
+```bash
+python src/diagnostics_suite.py
 #### How to run and reproduce figures:
 ```bash
 python src/proof_of_concepts.py
