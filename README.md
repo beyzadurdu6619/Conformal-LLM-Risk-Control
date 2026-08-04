@@ -64,7 +64,53 @@ $$\mathbb{P}(Y \in C(X)) \ge 1 - \alpha$$
 | **3. Zor** | Yüksek Belirsizlik | **Boyut: 0 (Boş Küme)** | Boyut: 5 | Sabit eşik çöker (boş küme); APS güvenliği korumak için tüm sınıfları kapsar. |
 
 ---
+# 🏥 Conformal Prediction Medical Diagnosis & Hospital Automation System
+### *Advanced Conformal Frameworks (Sections 4.1 - 4.5) in Clinical Practice*
 
+This repository features a desktop-based **Hospital Automation GUI** built with `CustomTkinter` and Python, demonstrating the practical application of **Advanced Conformal Prediction frameworks** (Sections 4.1 – 4.5) to medical decision-making.
+
+---
+
+## 📸 GUI & Clinical Scenarios Overview / Arayüz ve Klinik Senaryolar
+
+The desktop automation allows clinicians to interact with 5 distinct specialized medical engines:
+
+### 1. 🩺 Dermatology: Age-Group Fairness (Section 4.1: Group-Balanced)
+* **🇺🇸 Description:** Addresses unequal noise/uncertainty between Young and Elderly skin structures by computing conditional quantiles $\hat{q}^{(\text{young})}$ and $\hat{q}^{(\text{elderly})}$. Guarantees equal $90\%$ coverage for both age groups.
+* **🇹🇷 Açıklama:** Genç ve Yaşlı hastalar arasındaki cilt yapısı gürültü farkını $\hat{q}^{(\text{genç})}$ ve $\hat{q}^{(\text{yaşlı})}$ eşikleriyle dengeler. Her iki yaş grubunda bağımsız $\%90$ kapsama adaletini garanti eder.
+
+---
+
+### 2. 🎗️ Oncology: Rare Disease Detection (Section 4.2: Class-Conditional)
+* **🇺🇸 Description:** In imbalanced datasets ($95\%$ Healthy vs $5\%$ Cancer), standard conformal prediction drops cancer coverage to $0\%$. Hypothetical testing against class-specific thresholds $\hat{q}^{(0)}$ and $\hat{q}^{(1)}$ ensures $\ge 95\%$ coverage specifically for cancer cases.
+* **🇹🇷 Açıklama:** Dengesiz veride ($\%95$ Sağlıklı, $\%5$ Kanser) kanser vakalarını kaçırmamak için her sınıfa özel $\hat{q}^{(y)}$ eşikleriyle varsayımsal test uygular. Gerçek hasta Kanser olsa dahi $\%95$ doğrulukla teşhis sepetindedir.
+
+---
+
+### 3. 🧠 Neurosurgery: Tumor Segmentation (Section 4.3: Conformal Risk Control)
+* **🇺🇸 Description:** Bounded loss control for brain tumor surgery. Tunes the sensitivity parameter $\hat{\lambda}$ on calibration data to guarantee that the expected missed tumor tissue ratio (Loss) stays strictly below $\alpha \le 5\%$.
+* **🇹🇷 Açıklama:** Ameliyathanede beyin tümörünün pikseller düzeyinde ne kadarının kaçırıldığını (Loss) kontrol eder. Hassasiyet parametresi $\hat{\lambda}$ ayarlanarak ortalama doku kaçırma riski $\le \%5$ seviyesinde tutulur.
+
+---
+
+### 4. ☣️ Microbiology: Outlier & Outbreak Detection (Section 4.4: Outlier Detection)
+* **🇺🇸 Description:** Unsupervised anomaly detection on unlabeled blood profiles. Sets a threshold $\hat{q}$ using clean data to flag novel variants or outbreaks while bounding the False Positive Rate (FPR) to $\le 5\%$.
+* **🇹🇷 Açıklama:** Etiketsiz veride salgın hastalık veya nadir varyant tespiti yapar. Sağlıklı verilerin kuantil eşiği üzerinden yanlış alarm oranını $\%5$ ile sınırlandırır.
+
+---
+
+### 5. 🚑 Mobile Clinic: Climate/Environmental Shift (Section 4.5: Covariate Shift)
+* **🇺🇸 Description:** Adapts to environmental shifts when moving from hospital equipment to mobile scanning vans. Likelihood-ratio weighting $w(x)$ dynamically expands the threshold $\hat{q}(x)$ under noisy conditions, preserving $90\%$ coverage guarantees.
+* **🇹🇷 Açıklama:** Röntgen cihazı hastaneden gezici sağlık otobüsüne taşındığında değişen ortam/ışık şartlarına (Covariate Shift) göre ağırlıklı kuantil devreye girer ve emniyet eşiğini otomatik genişletir.
+
+---
+
+## 🚀 Quick Start / Hızlı Başlangıç
+
+### 1. Install Dependencies / Bağımlılıkları Yükleyin
+```bash
+pip install -r requirements.txt
+pip install customtkinter
 <a name="-deutsch"></a>
 ## 🇩🇪 Deutsch
 
